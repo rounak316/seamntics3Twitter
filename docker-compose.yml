@@ -1,0 +1,37 @@
+version: '2'
+services:
+
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - $HOME/projects/mongodb:/data/db
+    ports:
+      - 27017:27017
+
+  es-prod:
+    image: elasticsearch:7.2.0
+    container_name: es-prod
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "discovery.type=single-node"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 2g
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - $HOME/projects/esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet1
+  # TODO: Add you service docker-compose config here
+networks:
+  esnet1:
+    driver: bridge

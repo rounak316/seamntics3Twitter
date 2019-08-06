@@ -1,0 +1,35 @@
+{
+  "name": "tweet-analysis",
+  "version": "0.0.1",
+  "description": "Tweet analysis service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "scrapper": "node dist/twitter/scrapper.js",
+    "watch-node": "nodemon dist/index.js"
+  },
+  "author": "YOUR NAME <name@email.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
+    "@types/body-parser": "^1.17.0",
+    "@types/elasticsearch": "^5.0.34",
+    "@types/express": "^4.17.0",
+    "@types/lodash": "^4.14.135",
+    "@types/mongoose": "^5.5.11",
+    "@types/twitter": "^1.7.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.19.0",
+    "elasticsearch": "^16.3.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.6.8",
+    "nconf": "^0.10.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^11.9.4",
+    "typescript": "^3.3.3"
+  }
+}
