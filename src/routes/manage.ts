@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/track" , (req: any, res: any) => {
 
-    User.find( {} ).then( data=>{
+    User.find( {  "tracking": { "$exists" : true } } ).then( data=>{
     res.send({status: true, data: data })
     } ).catch( err=>{
     res.json( {status: false, data: []} ) 

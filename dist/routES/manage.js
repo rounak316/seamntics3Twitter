@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const db_1 = require("../mongodb/db");
 const router = express_1.default.Router();
 router.get("/track", (req, res) => {
-    db_1.User.find({}).then(data => {
+    db_1.User.find({ "tracking": { "$exists": true } }).then(data => {
         res.send({ status: true, data: data });
     }).catch(err => {
         res.json({ status: false, data: [] });
