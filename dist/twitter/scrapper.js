@@ -29,8 +29,14 @@ function verifyUser(screen_name) {
             user = yield twitter.get('users/show', userHandle);
         }
         catch (err) {
-            console.log("Error", userHandle, err[0].message);
-            throw Error(screen_name + " coudn' verify!");
+            if (err[0].code == 88) {
+                console.log("Error", userHandle, err[0], err[0].message);
+                throw Error(screen_name + " coudn' verify!");
+            }
+            else {
+                console.log("Error", userHandle, err[0], err[0].message);
+                user = { "verified": false };
+            }
         }
         let isVerified = user["verified"];
         try {
