@@ -143,6 +143,11 @@ router.post("/get/:username", (req, res) => {
     else {
         db_1.Tweet.aggregate([
             {
+                "$match": {
+                    "user.screen_name": screenName
+                }
+            },
+            {
                 "$project": {
                     year: { $year: "$created_at" },
                     month: { $month: "$created_at" },
@@ -199,6 +204,11 @@ router.post("/count/:username", (req, res) => {
     }
     else {
         db_1.Tweet.aggregate([
+            {
+                "$match": {
+                    "user.screen_name": screenName
+                }
+            },
             {
                 "$project": {
                     year: { $year: "$created_at" },
@@ -264,10 +274,10 @@ router.get("/get/:username", (req, res) => {
         res.send({ status: false });
     }
     else {
-        db_1.Tweet.find({ 'user.screen_name': new RegExp('\\b' + screenName + '\\b', 'i') }, { "user": 0, }).limit(20).then(data => {
+        db_1.Tweet.find({ 'user.screen_name': new RegExp('\\b' + screenName + '\\b', 'i') }, { "text": 1, "source": 1, id: 1, "_id": 0 }).limit(20).then(data => {
             if (data.length > 0) {
                 let nextCursor = `/tweets/get/${screenName}/${data[data.length - 1]["_id"]}`;
-                res.send({ status: false, nextCursor: nextCursor, data: data });
+                res.send({ status: true, nextCursor: nextCursor, data: data });
             }
             else {
                 res.send({ status: true, data: data });
