@@ -15,5 +15,11 @@ function test() {
         console.log(screenName);
     });
 }
+function reoveVerifiedField() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let screenName = yield poller_1.StartPollingForFindingUserMentions();
+        console.log(screenName);
+    });
+}
 test();
 //# sourceMappingURL=test.js.map

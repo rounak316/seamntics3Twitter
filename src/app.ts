@@ -15,13 +15,14 @@ class App {
 
 
   constructor() {
+   
     InitialisePoller();
+    
     this.app = express(); // run the express instance and store in app
     this.config();
     // this.tracking("tracking");
     // this.search("search");
     // this.tweets("tweets");
-
     this.postmanCollection()
 
     this.app.use( "/tracking",  TrackingRouter );

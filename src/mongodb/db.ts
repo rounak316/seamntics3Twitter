@@ -1,14 +1,41 @@
 import mongoose from "mongoose";
 
-const uri: string = "mongodb://localhost:27017/local";
+const uri: string = "mongodb://mongodb:27017/local";
 
-mongoose.connect(uri , {useNewUrlParser: true }, (err: any) => {
-  if (err) {
-    // console.log(err.message);
-  } else {
-    console.log("Succesfully Connected!");
-  }
-});
+function timeout(ms : number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+export async function connectToMongo() : Promise<any> {
+
+  try{
+
+  
+  let connectionResult = await mongoose.connect(uri , {useNewUrlParser: true })
+    console.log("Connectd To mongo" )
+    
+  }  catch(err){
+
+  await timeout(2000)
+  console.log("Check your mongo Dude! Will try again in few seconds! ERR")
+  return await connectToMongo()
+}
+
+
+}
+  // return mongoose.connect(uri , {useNewUrlParser: true }, (err: any) => {
+  //   if (err) {
+  //     // console.log(err.message);
+  //     console.log("Check your mongo Dude! Will try again in few seconds!", err)
+  //     await connectToMongo()
+  //     // process.exit(1)
+  //   } else {
+  //     console.log("Succesfully Connected!");
+  //   }
+  // });
+
+
 
 export interface ITweet extends mongoose.Document {
   title: string;

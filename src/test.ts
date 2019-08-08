@@ -8,4 +8,11 @@ async function test(){
 }
 
 
+async function reoveVerifiedField(){
+
+    let screenName = await StartPollingForFindingUserMentions()
+    console.log(screenName)
+
+}
+
 test()

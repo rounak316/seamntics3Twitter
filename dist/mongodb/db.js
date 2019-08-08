@@ -1,18 +1,35 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const uri = "mongodb://localhost:27017/local";
-mongoose_1.default.connect(uri, { useNewUrlParser: true }, (err) => {
-    if (err) {
-        // console.log(err.message);
-    }
-    else {
-        console.log("Succesfully Connected!");
-    }
-});
+const uri = "mongodb://mongodb:27017/local";
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+function connectToMongo() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let connectionResult = yield mongoose_1.default.connect(uri, { useNewUrlParser: true });
+            console.log("Connectd To mongo");
+        }
+        catch (err) {
+            yield timeout(2000);
+            console.log("Check your mongo Dude! Will try again in few seconds! ERR");
+            return yield connectToMongo();
+        }
+    });
+}
+exports.connectToMongo = connectToMongo;
 exports.UserSchema = new mongoose_1.default.Schema({
     screenName: { type: String, required: true },
     status: { type: Boolean, required: true },
